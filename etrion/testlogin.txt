@@ -1,0 +1,31 @@
+package com.ACN.functionaltesting;
+
+import org.openqa.selenium.WebDriver;
+
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Test;
+
+import com.ACN.configure.Getdriver;
+import com.ACN.ui.PomGmail;
+import com.ACN.utils.Getdata;
+
+public class Testloginsc001 {
+	WebDriver driver=Getdriver.getDriverInstance();
+	PomGmail gmail=new PomGmail(driver);
+	String un=Getdata.fromExcel("sheet", "sheet1", 0, 0);
+	String pawd=Getdata.fromExcel("sheet", "sheet1", 0, 2);
+	@Test
+	public void testTc001() throws InterruptedException
+	{
+		gmail.getId().sendKeys(un);
+		gmail.getNext().click();
+		gmail.getPwd().sendKeys(pawd);
+		gmail.getLogin().click();
+	}
+	@AfterTest
+	public void postcondition()
+	{
+		driver.close();
+	}
+
+}

@@ -1,0 +1,42 @@
+package com.ACN.configure;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
+import com.ACN.utils.Getdata;
+
+public class Getdriver {
+	public static WebDriver getDriverInstance()
+	{
+		WebDriver driver=null;
+		String browserName=Getdata.fromProperties("k", "browser");
+		String appurlName=Getdata.fromProperties("k", "url");
+		if(browserName.equalsIgnoreCase("firefox"))
+		{
+			System.setProperty("webdriver.firefox.marionette","./Driver/geckodriver.exe");
+			driver=new FirefoxDriver();
+			
+			
+	
+		}
+		else if(browserName.equalsIgnoreCase("chrome"))
+		{
+			System.setProperty("webdriver.chrome.driver","./Driver/chromeDriver.exe");
+			driver=new ChromeDriver();
+			
+			
+		}
+		else{
+			System.out.println("provide proper browser name");
+			
+		}
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+		driver.get(appurlName);
+		return driver;
+	}
+
+}
